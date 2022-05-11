@@ -1,13 +1,15 @@
 
+from ap_parameters import APParameters
+from WBInterface import WBInterface
 
 class APHandle:
 	def __init__(self,
-		fileName: str,
-		wb: WBInterface,
-        parameters: Parameters
+		fileName, #: str,
+        parameters, #: APParameters
+		wb #: WBInterface,
 	):
-		self.self.__fileName = fileName
-		self.self.__wb = wb
+		self.__fileName = fileName
+		self.__wb = wb
 		self.__parameters = parameters
 	''''''
 	def run(self):
@@ -22,8 +24,10 @@ class APHandle:
                 # 'p84':[1,0.1,0.5,0.6],
                 # 'p85':[1,0.1,0.5,0.6],
             # }
-			self.__wb.input_by_name(self.__parameters.inputP())
-			# input_p
+			self.__wb.input_by_name(
+				self.__parameters.inputP()
+				# input_p
+			)
 
 			self.__wb.import_parameters()
 
@@ -83,9 +87,13 @@ class APHandle:
 					# self.__wb.save_setups_view('SYS', cwdp('pictures'), **env_args)
 				#==============================================================================
 
-			self.__wb.output_parameters()
+			outParams = self.__wb.output_parameters()
 			self.__wb.export_wb_report()
+			with open ('file.txt','w') as f:
+				print >> f, outParams
 
+			print('outParams:')
+			print(outParams)
 
 
 		except Exception as err_msg:
@@ -94,6 +102,6 @@ class APHandle:
 
 		finally:
 
-			self.__wb.archive_if_complete()
+			#self.__wb.archive_if_complete()
 
 			self.__wb.issue_end()

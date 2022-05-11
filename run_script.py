@@ -5,6 +5,8 @@ from glob import glob
 import sys
 import platform
 import os
+from ap_handle import APHandle
+from ap_parameters import APParameters, params
 #from numpy import loadtxt
 #===========================================================================
 #======= This block imports framework files ================================
@@ -47,9 +49,11 @@ if __name__ == '__main__':
     #__________________________________________________________
 
     apHandle = APHandle(
-        fileName = '',
-        parameters = APParameters(),
-        wb = WBInterface()
+        '',
+        APParameters(
+            params
+        ),
+        WBInterface()
     )
     apHandle.run()
 """
