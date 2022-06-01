@@ -9,7 +9,6 @@ def goalFunction(results):
     minStress = -268
     maxDisplacement = 200
     goal_function = round(results[0])
-
     if results[2] > maxDisplacement:  goal_function += round(
         ((maxDisplacement - results[2]) / 10 * results[0]))
     # print(results[i][2]) #Displacement
