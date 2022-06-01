@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
-""" Script by Toybich Egor
-"""
 from glob import glob 
 import sys
 import platform
 import os
 from ap_handle import APHandle
-from ap_parameters import APParameters, params
+from ap_parameters import APParameters
+import goalFunction
+from ap_jaya import APJaya
 #from numpy import loadtxt
 #===========================================================================
 #======= This block imports framework files ================================
@@ -38,7 +37,16 @@ if modules_files[2]: exec('from {} import Logger'.format(modules_files[2]))
 #===========================================================================
 #===========================================================================
 #===========================================================================
-print(2)
+
+def apJayaIterationBuilder(index, outParams):
+    parameters = APParameters(
+        inKeys = apParameters.inKeys(),
+        inValues = apJaya.algorithm(index, outParams),
+        outKeys = apParameters.outputKeys()
+    )
+    return apParameters
+
+
 if __name__ == '__main__':
     filepath = os.path.abspath(__file__)
     filedir = os.path.dirname(filepath)
@@ -47,15 +55,37 @@ if __name__ == '__main__':
     print('File: ' + filepath)
     cwdp = lambda x: os.path.join(filedir, x)
     #__________________________________________________________
+    
+    
+    apParameters = APParameters()
+    apJaya = APJaya(
+        kids_number = 3, 
+        parameters = apParameters
+    )
 
     apHandle = APHandle(
         '',
-        APParameters(
-            params
-        ),
-        WBInterface()
+        apParameters,
+        WBInterface(),
+        iterationCount = 2,
+        iterationBuilder = apJayaIterationBuilder
     )
+    
     apHandle.run()
+
+    # opJaya = OPJaya()
+    #
+    # apHandle = APHandle(
+    #     '',
+    #     APParameters(
+    #         params
+    #     ),
+    #     WBInterface(),
+    #     savePictures: true,
+    #     iterationsCount: opJaya.iterationsCount,
+    #     iterationBuilder: opJaya.iterationBuilder,
+    # )
+    # apHandle.run()
 """
 if __name__ == '__main__':
     filepath = os.path.abspath(__file__)
