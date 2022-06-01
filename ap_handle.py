@@ -1,5 +1,6 @@
 from ap_parameters import APParameters
 from WBInterface import WBInterface
+from Logger import Logger
 
 class APHandle:
 	def __init__(self,
@@ -9,11 +10,14 @@ class APHandle:
 		iterationCount = 1,
 		iterationBuilder = None
 	):
+		self._logger = Logger('log.txt')
+		self._log_ = self._logger.log
 		self.__fileName = fileName
 		self.__wb = wb
 		self.__parameters = parameters
 		self.__iterationCount = iterationCount
 		self.__iterationBuilder = iterationBuilder
+		self._log_('[APHandle]: ' + self.__class__.__name__)
 
 	''''''
 	def run(self):
@@ -22,7 +26,10 @@ class APHandle:
 			# self.__wb.find_and_import_parameters()
 				#----------------------------------------------------------------
 				# Parameters can be imported directly
+			self._log_('[APHandle.run] __iterationCount: ' + str(self.__iterationCount))
+			self._log_('[APHandle.run] __iterationBuilder: ' + str(self.__iterationBuilder))
 			for index in range(self.__iterationCount):
+				self._log_('[APHandle.run] iteration index: ' + str(index))
 				outParams = self.__solveProject(
 					self.__parameters.inputP(),
 					self.__parameters.outputP()
@@ -31,13 +38,16 @@ class APHandle:
 					index = index,
 					outParams = outParams
 				)
+				self._log_('[APHandle.run] iteration index: ' + str(index) + ' completed')
 
+			self._log_('[APHandle.run] all ' + str(self.__iterationCount) + ' iterations completed')
+			self._log_('[APHandle.run] writing report...')
 			self.__wb.export_wb_report()
 			with open('file.txt', 'w') as f:
 				print >> f, outParams
 
-			print('outParams:')
-			print(outParams)
+			self._log_('[APHandle.run] outParams:')
+			self._log_(outParams)
 
 
 		except Exception as err_msg:
@@ -55,6 +65,7 @@ class APHandle:
 	   inputP,
 	   outputP
 	):
+		self._log_('[APHandle.__solveProject]')
 		# input_p = {
 			# 'p83':[1,0.1,0.5,0.6],
 			# 'p84':[1,0.1,0.5,0.6],
@@ -122,5 +133,5 @@ class APHandle:
 				# env_args = dict(fpref=env_pref, width=1920, height=1080, zoom_to_fit=True, fontfact=1.5)
 				# self.__wb.save_setups_view('SYS', cwdp('pictures'), **env_args)
 			#==============================================================================
-
+		self._log_('[APHandle.__solveProject] completed')
 		return self.__wb.output_parameters()

@@ -1,5 +1,7 @@
+from Logger import Logger
 #from numpy import loadtxt
 
+"""
 # params = {
 #     'inKeys': k,
 #     'inValues': [
@@ -10,7 +12,7 @@
 #     'outKeys': l,
 # }
 #print(params['outKeys'])
-"""
+
 params = {
     'inKeys': ['p83', 'p84', 'p85', 'p86', 'p87', 'p88', 'p89', 'p90', 'p91', 'p92', 'p93', 'p94', 'p95', 'p96', 'p97', 'p100', 'p101', 'p102', 'p103', 'p104', 'p105', 'p106', 'p107', 'p108', 'p109', 'p110', 'p111', 'p112', 'p113', 'p114', 'p115', 'p116', 'p117', 'p118', 'p120', 'p123', 'p125', 'p126', 'p127', 'p128', 'p129', 'p130', 'p131', 'p132', 'p133', 'p134', 'p135', 'p136', 'p137', 'p138', 'p140', 'p143', 'p145', 'p146', 'p147', 'p148', 'p149', 'p150', 'p151', 'p152', 'p153', 'p154', 'p155', 'p156', 'p157', 'p158', 'p159', 'p160', 'p161', 'p162', 'p163', 'p164', 'p165', 'p166', 'p167', 'p168', 'p169', 'p170', 'p171', 'p172', 'p173', 'p174', 'p175', 'p176', 'p177', 'p178', 'p179', 'p180', 'p181'],
     'inValues': [
@@ -30,15 +32,19 @@ class APParameters:
         inValues = [],
         outKeys = [],
     ):
+        self._logger = Logger('log.txt')
+        self._log_ = self._logger.log
         self.__path = path + '/' if path != None  else ''
         self.__inKeys = inKeys
         self.__inValues = inValues
         self.__outKeys = outKeys
         if path == None and len(inKeys) > 0 and len(inValues) > 0 and len(outKeys) > 0:
-            print('has in params')
+            self._log_('[APParameters] from input params...')
             self.__initied = True
         else:
+            self._log_('[APParameters] from file...')
             self.__initied = False
+        self._log_('[APParameters]: ' + self.__class__.__name__)
 
     ''''''
     def __fromFile(self):
@@ -60,15 +66,16 @@ class APParameters:
             lens.append(len(row))
             if len(self.__inKeys) != len(row):
                 raise Exception('In Keys')
-        print('Number of inputs: ', lens)
+        self._log_('[APParameters] Number of inputs: lens')
+        self._log_(lens)
         with open('output keys.txt') as f:
             self.__outKeys = f.read().splitlines()
         if len(self.__inKeys) <= 0:
            raise Exception('111')
-        print('Number of input parameters: ' + str(len(self.__inKeys)))
+        self._log_('[APParameters] Number of input parameters: ' + str(len(self.__inKeys)))
         if len(self.__outKeys) <= 0:
             raise Exception('Output keys')
-        print('Number of output parameters: ' + str(len(self.__outKeys)))
+        self._log_('[APParameters] Number of output parameters: ' + str(len(self.__outKeys)))
         self.__initied = True
 
     ''''''
@@ -90,6 +97,9 @@ class APParameters:
 
     def inKeys(self):
         return self.__inKeys
+
+    def inValues(self):
+        return self.__inValues
 
     def outKeys(self):
         return self.__outKeys

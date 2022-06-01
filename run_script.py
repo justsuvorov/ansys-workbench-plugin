@@ -38,10 +38,18 @@ if modules_files[2]: exec('from {} import Logger'.format(modules_files[2]))
 #===========================================================================
 #===========================================================================
 
+_logger = Logger('log.txt')
+_log_ = _logger.log
+
+
 def apJayaIterationBuilder(index, outParams):
+    _log_('[apJayaIterationBuilder] index: ' + str(index))
+    _log_('[apJayaIterationBuilder] outParams: ' + str(outParams))
+    apJayaAlgorithmResult =  apJaya.algorithm(index, outParams)
+    _log_('[apJayaIterationBuilder] apJayaAlgorithmResult: ' + str(apJayaAlgorithmResult))
     parameters = APParameters(
         inKeys = apParameters.inKeys(),
-        inValues = apJaya.algorithm(index, outParams),
+        inValues = apJayaAlgorithmResult,
         outKeys = apParameters.outputKeys()
     )
     return apParameters
@@ -67,7 +75,7 @@ if __name__ == '__main__':
         '',
         apParameters,
         WBInterface(),
-        iterationCount = 2,
+        iterationCount = 5,
         iterationBuilder = apJayaIterationBuilder
     )
     
