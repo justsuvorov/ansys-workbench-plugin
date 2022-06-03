@@ -2,12 +2,17 @@ from ap_parameters import APParameters
 from WBInterface import WBInterface
 from Logger import Logger
 
+"""
+A class to handle WB project
+iterationCount is the required number of iterations
+iterationBuilder is the module for solving several problems, for example, optimization problem
+"""
 class APHandle:
 	def __init__(self,
 		fileName,
         parameters,
 		wb,
-		iterationCount = 1,
+		iterationCount,
 		iterationBuilder = None
 	):
 		self._logger = Logger('log.txt')
@@ -30,15 +35,21 @@ class APHandle:
 			self._log_('[APHandle.run] __iterationBuilder: ' + str(self.__iterationBuilder))
 			for index in range(self.__iterationCount):
 				self._log_('[APHandle.run] iteration index: ' + str(index))
-				outParams = self.__solveProject(
+				outParamsStr = self.__solveProject(
 					self.__parameters.inputP(),
 					self.__parameters.outputP()
 				)
-				self.__iterationBuilder(
+				outParams = []
+				for rowStr in outParamsStr:
+					row = []
+					for item in rowStr:
+						row.append(float(item))
+					outParams.append(row)
+				self.__parameters = self.__iterationBuilder(
 					index = index,
 					outParams = outParams
 				)
-				self._log_('[APHandle.run] iteration index: ' + str(index) + ' completed')
+				self._log_('[APHandle.run] iteration ' + str(index) + ' completed')
 
 			self._log_('[APHandle.run] all ' + str(self.__iterationCount) + ' iterations completed')
 			self._log_('[APHandle.run] writing report...')
@@ -46,7 +57,7 @@ class APHandle:
 			with open('file.txt', 'w') as f:
 				print >> f, outParams
 
-			self._log_('[APHandle.run] outParams:')
+			#self._log_('[APHandle.run] outParams:')
 			self._log_(outParams)
 
 
@@ -65,7 +76,7 @@ class APHandle:
 	   inputP,
 	   outputP
 	):
-		self._log_('[APHandle.__solveProject]')
+		#self._log_('[APHandle.__solveProject]')
 		# input_p = {
 			# 'p83':[1,0.1,0.5,0.6],
 			# 'p84':[1,0.1,0.5,0.6],

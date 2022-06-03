@@ -1,3 +1,6 @@
+*.txt
+WBInterface.py
+
 # Byte-compiled / optimized / DLL files
 /venv/
 /.idea
@@ -129,3 +132,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+/Optimization1_files/
+/Optimization1_result_files/
+/Optimization1.wbpj
+/Optimization1_result.wbpj
+/Optimization1_result.wbpz
+/11-05/
+/.Optimization1_files.backup/
+/11-05/

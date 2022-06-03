@@ -29,7 +29,7 @@ class APParameters:
     def __init__(self,
         path = None,
         inKeys = [],
-        inValues = [],
+        inValues = [[]],
         outKeys = [],
     ):
         self._logger = Logger('log.txt')
@@ -39,16 +39,16 @@ class APParameters:
         self.__inValues = inValues
         self.__outKeys = outKeys
         if path == None and len(inKeys) > 0 and len(inValues) > 0 and len(outKeys) > 0:
-            self._log_('[APParameters] from input params...')
+            self._log_('[APParameters] from input parameters')
             self.__initied = True
         else:
             self._log_('[APParameters] from file...')
             self.__initied = False
-        self._log_('[APParameters]: ' + self.__class__.__name__)
+        self._log_('[APParameters]: ' + str(self.__class__.__name__))
 
     ''''''
     def __fromFile(self):
-        self.__initied = False
+        #self.__initied = False
         self.__inKeys = []
         self.__inValues = []    # [ [] ]
         self.__outKeys = []
@@ -59,14 +59,14 @@ class APParameters:
             inStrValues = f.read().splitlines()
             for strValue in inStrValues:
                 value = strValue.replace(',', '.')
-                inValuesRow.append(value)
+                inValuesRow.append(float(value))
             self.__inValues.append(inValuesRow)
         lens = []
         for row in self.__inValues:
             lens.append(len(row))
             if len(self.__inKeys) != len(row):
                 raise Exception('In Keys')
-        self._log_('[APParameters] Number of inputs: lens')
+        self._log_('[APParameters] Number of inputs: ')
         self._log_(lens)
         with open('output keys.txt') as f:
             self.__outKeys = f.read().splitlines()
@@ -82,14 +82,19 @@ class APParameters:
     def inputP(self):
         if not self.__initied:
             self.__fromFile()
+            self._log_('[APParameters] from file: ')
         keys = {}
         index = 0
+        self._log_('[APParameters] __InValues : '+str(self.__inValues))
         for key in self.__inKeys:
             if not key in keys.keys():
                 keys[key] = []
             for row in self.__inValues:
                 keys[key].append(row[index])
             index += 1
+        self._log_('[APParameters] __InValues : '+str(self.__inValues))
+        self._log_('[APParameters] inputP : '+str(keys))
+
         return keys
     ''''''
     def outputP(self):
