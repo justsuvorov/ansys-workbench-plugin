@@ -95,7 +95,7 @@ class APJaya:
             self.best_kid = self.kids[self.goal_function.index(self.best)]
             self.worst = max(self.goal_function)
             self.worst_kid = self.kids[self.goal_function.index(self.worst)]
-            self._initialization_completed == True
+            self._initialization_completed = True
 
         else: 
             for j in range(self.kids_number):
