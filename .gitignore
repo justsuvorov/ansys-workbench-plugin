@@ -1,4 +1,4 @@
-*.txt
+
 WBInterface.py
 
 # Byte-compiled / optimized / DLL files
@@ -140,3 +140,4 @@ dmypy.json
 /11-05/
 /.Optimization1_files.backup/
 /11-05/
+/ansys-plugin.rar
