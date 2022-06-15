@@ -28,7 +28,7 @@ Ansys Workbench comes with IronPython 2.7 so to run it from batch mode we need t
 
 - Module *ap_handle.py* is a class for working with WBinterface and choosing of modules for solving different problems with Ansys. It will be used for future modules.
 
-- Module *goalFunction.py* contains a goal (cost) function for the specific problem. It uses results of simulations for the calculation of new values of parameters
+- Module *goalFunction.py* contains a goal (cost) function for the specific optimization problem. It uses results of simulations for the calculation of new values of parameters
 
 
 ## How to use 
