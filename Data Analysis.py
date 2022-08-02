@@ -71,27 +71,8 @@ with open(datadir + 'factor.csv', 'w') as f:
     write = csv.writer(f, delimiter=";")
     write.writerows(X_transformed)
 
-
-
-data_heat_map = np.array(data.corr())
-for i in range(len(data_heat_map)):
-    for j in range(len(data_heat_map[0])):
-        if (((data_heat_map[i][j]) > (-0.5)) and ((data_heat_map[i][j]) < (0.5))):
-            data_heat_map[i][j] = 0
-
-
 import seaborn as sns
 plt.figure(figsize=(20,10))
 
-c = sns.heatmap(data_heat_map, linewidths=.01 )
+c = sns.heatmap(data1.corr(), linewidths=.01 )
 plt.show()
-
-
-"""
-#plt.scatter(parameters.sum(axis = 1), results['mass'])
-#plt.show()
-"""
-
-
-
-
