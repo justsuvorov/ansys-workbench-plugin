@@ -4,11 +4,11 @@ import matplotlib.pyplot as plt
 import csv
 from goalFunction import goalFunction
 
-datadir = r'E:\ANSYS\Dissertation'
+file = r'E:\ANSYS\Dissertation\Optimization Python\input parameters.csv'
 
 #загрузка данных из csv
-inputData = np.loadtxt(datadir + '\Optimization Pythoninput parameters.csv', delimiter=",")
-outputData = np.loadtxt(datadir + '\Optimization Pythonresults.csv', delimiter=",")
+inputData = np.loadtxt(file, delimiter=",")
+outputData = np.loadtxt(file, delimiter=",")
 
 #формирование DataFrames
 results = pd.DataFrame((outputData), columns= ['mass','stress1','Displacement','k1','stress2','k2',
